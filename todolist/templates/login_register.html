@@ -2,6 +2,21 @@
 
 {% block content %}
 {% if login_tab %}
+    <div>
+        <h2>Login</h2>
+        <form action="/login" method="POST">
+            <div>
+                {{ login_form.hidden_tag() }}
+                <label class="form-label"><strong>Nick name:</strong></label>
+                {{ login_form.nick_name(class="form-control", required=True, autofocus=True) }}
+            </div>
+            <div>
+                <label class="form-label"><strong>Password:</strong></label>
+                {{ login_form.password(class="form-control", required=True) }}
+            </div>
+            <input type="submit" value="Login">
+        </form>
+    </div>
 {% endif %}
 
 {% if register_tab %}
