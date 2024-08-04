@@ -1,4 +1,5 @@
-from flask import render_template, request
+from todolist.models import User, Task, Week
+from flask import render_template, request, session, redirect, url_for
 from todolist import app
 from todolist.forms import LoginForm
 
@@ -6,6 +7,19 @@ from todolist.forms import LoginForm
 @app.route('/')
 def return_main_page():
     return render_template('main_page.html')
+
+@app.route('/home_page', methods=['GET'])
+def return_home_page():
+    user_id = session.get('user_id')
+    week_id= session.get('week_id')
+    if user_id:
+        user = User.query.filter_by(id=user_id).first()
+        week = Week.query.filter_by(owner=user_id).first()
+        tasks = Task.query_by(belong=week_id, active=True).all()
+
+        return render_template('home_page.html', user=user, week=week, tasks=tasks)
+    else:
+        return redirect(url_for('login_user_get'))
 
 
 @app.route('/login', methods=['GET'])
