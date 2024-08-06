@@ -1,7 +1,8 @@
 from todolist.models import User, Task, Week
-from flask import render_template, request, session, redirect, url_for
+from flask import render_template, request, session, redirect, url_for, flash
 from todolist import app
 from todolist.forms import LoginForm
+from werkzeug.security import check_password_hash
 
 
 @app.route('/')
@@ -35,3 +36,14 @@ def login_user_post():
     if login_form.validate_on_submit():
         nick_name = login_form.nick_name.data
         password = login_form.password.data
+
+        user = User.query.filter_by(nick_name=nick_name).first()
+        if not user or not check_password_hash(user.password, password):
+            flash("Please check your login details and try again.", "danger")
+            return redirect(url_for('login_user_get'))
+        else:
+            session['user_id'] = user.id
+            return redirect(url_for("return_home_page"))
+
+    flash("Invalid input. Please check your details and try again.", "danger")
+    return redirect(url_for("login_user_get"))

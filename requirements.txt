@@ -1,9 +1,11 @@
 Flask-SQLAlchemy==3.0.3
 Flask-Migrate==4.0.7
 python-dotenv==1.0.1
+pymysql
 
 SQLAlchemy==2.0.31
 Werkzeug==3.0.3
 alembic==1.13.2
 
 WTForms==3.1.2
+Flask-WTF==1.2.1
