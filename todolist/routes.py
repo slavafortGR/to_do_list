@@ -47,3 +47,9 @@ def login_user_post():
 
     flash("Invalid input. Please check your details and try again.", "danger")
     return redirect(url_for("login_user_get"))
+
+
+@app.route('/register', methods=['GET'])
+def register_user_get():
+    registration_form = RegistrationForm(request.form)
+    return registration_form('login_register.html', register_tab=True, registration_form=registration_form)
