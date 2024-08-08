@@ -1,7 +1,7 @@
 from todolist.models import User, Task, Week
 from flask import render_template, request, session, redirect, url_for, flash
 from todolist import app
-from todolist.forms import LoginForm
+from todolist.forms import LoginForm, RegistrationForm
 from werkzeug.security import check_password_hash
 
 
@@ -52,4 +52,4 @@ def login_user_post():
 @app.route('/register', methods=['GET'])
 def register_user_get():
     registration_form = RegistrationForm(request.form)
-    return registration_form('login_register.html', register_tab=True, registration_form=registration_form)
+    return render_template('login_register.html', register_tab=True, registration_form=registration_form)

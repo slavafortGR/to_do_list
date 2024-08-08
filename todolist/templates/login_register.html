@@ -20,5 +20,17 @@
 {% endif %}
 
 {% if register_tab %}
+<h2>Register</h2>
+<form action="/register" method="POST">
+    <div>
+        {{ registration_form.hidden_tag() }}
+        <label class="form-label"><strong>Nick name:</strong></label>
+        {{ registration_form.nick_name(class="form-control", autofocus=True) }}
+    </div>
+    <div>
+        <label class="form-label"><strong>Password:</strong></label>
+        {{ registration_form.password(class="form-control") }}
+    </div>
+</form>
 {% endif %}
 {% endblock %}

@@ -7,3 +7,8 @@ class LoginForm(FlaskForm):
     nick_name = StringField('Nick name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+
+
+class RegistrationForm(FlaskForm):
+    nick_name = StringField('Nick Name', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
