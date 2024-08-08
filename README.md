@@ -18,3 +18,28 @@
  * Все созданные календари с заданиями должны сохраняться в Базе Данных
  
  To Do List Project
+
+### Database migration setup
+
+- When there are any changes in the model file models.py - these changes must occur in the database. To do this, run the following commands:
+
+$ flask db init 
+# create a migration repository
+
+$ flask db migrate -m "Create users"
+# create a users table
+
+$ flask db upgrade
+# apply the changes
+
+$ flask db migrate -m "Create weeks"
+# create a weeks table
+
+$ flask db upgrade
+# apply the changes
+
+$ flask db migrate -m "Create tasks"
+# create a tasks table
+
+$ flask db upgrade
+# apply the changes

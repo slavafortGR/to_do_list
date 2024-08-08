@@ -1,3 +1,4 @@
+from datetime import datetime
 from todolist import db
 
 class User(db.Model):
@@ -9,8 +10,13 @@ class User(db.Model):
 class Week(db.Model):
     __tablename__ = 'weeks'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    start_week = db.Column(db.DateTime)
-    end_week = db.Column(db.DateTime)
+    monday = db.Column(db.DateTime, default=datetime.utcnow)
+    tuesday = db.Column(db.DateTime, default=datetime.utcnow)
+    wednesday = db.Column(db.DateTime, default=datetime.utcnow)
+    thursday = db.Column(db.DateTime, default=datetime.utcnow)
+    friday = db.Column(db.DateTime, default=datetime.utcnow)
+    saturday = db.Column(db.DateTime, default=datetime.utcnow)
+    sunday = db.Column(db.DateTime, default=datetime.utcnow)
     owner = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 

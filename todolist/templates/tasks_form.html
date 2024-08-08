@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% if create_mode %}
+    <h2>Create week tasks</h2>
+        <form action="/create" method="POST">
+    {% else %}
+        <h2>Edit origin/short URL</h2>
+    {% endif %}
+        <div>
+            {{ week_form.hidden_tag() }}
+            <label class="form-label"><strong>Monday:</strong></label>
+            {{ task_form.task(class="form-control", required=False, autofocus=True) }}
+        </div>
+        <div>
+            <label class="form-label"><strong>Tuesday:</strong></label>
+            {{ task_form.task(class="form-control", required=False) }}
+        </div>
+        <div>
+            <label class="form-label"><strong>Wednesday:</strong></label>
+            {{ task_form.task(class="form-control", required=False) }}
+        </div>
+        <div>
+            <label class="form-label"><strong>Thursday:</strong></label>
+            {{ task_form.task(class="form-control", required=False) }}
+        </div>
+        <div>
+            <label class="form-label"><strong>Friday:</strong></label>
+            {{ task_form.task(class="form-control", required=False) }}
+        </div>
+        <div>
+            <label class="form-label"><strong>Saturday:</strong></label>
+            {{ task_form.task(class="form-control", required=False) }}
+        </div>
+        <div>
+            <label class="form-label"><strong>Sunday:</strong></label>
+            {{ task_form.task(class="form-control", required=False) }}
+        </div>
+{% endblock %}

@@ -1,7 +1,7 @@
 from todolist.models import User, Task, Week
 from flask import render_template, request, session, redirect, url_for, flash
 from todolist import app, db
-from todolist.forms import LoginForm, RegistrationForm
+from todolist.forms import LoginForm, RegistrationForm, TaskForm, WeekForm
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
@@ -90,3 +90,16 @@ def register_user_post():
 def logout():
     session.pop('user_id', None)
     return redirect(url_for('login_user_get'))
+
+
+@app.route('/create', methods=['GET'])
+def create_note_form():
+    week_form = WeekForm(request.form)
+    task_form = TaskForm(request.form)
+    task = None
+
+    if 'user_id' in session:
+        return render_template('tasks_form.html', create_mode=True, task=task, task_form=task_form, week_form=week_form)
+    flash('You need login', 'danger')
+    return redirect(url_for('login_user_get'))
+
