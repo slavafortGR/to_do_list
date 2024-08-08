@@ -1,8 +1,8 @@
 from todolist.models import User, Task, Week
 from flask import render_template, request, session, redirect, url_for, flash
-from todolist import app
+from todolist import app, db
 from todolist.forms import LoginForm, RegistrationForm
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 @app.route('/')
@@ -53,3 +53,40 @@ def login_user_post():
 def register_user_get():
     registration_form = RegistrationForm(request.form)
     return render_template('login_register.html', register_tab=True, registration_form=registration_form)
+
+
+@app.route('/register', methods=['POST'])
+def register_user_post():
+    registration_form = RegistrationForm(request.form)
+
+    if registration_form.validate_on_submit():
+        nick_name = registration_form.nick_name.data
+        password = registration_form.password.data
+
+        if User.query.filter_by(nick_name=nick_name).first() is not None:
+            flash('Nick name already exists', 'danger')
+            return render_template('login_register.html', registration_tab=True, registration_form=registration_form)
+
+        new_user = User(
+            nick_name=nick_name,
+            password=generate_password_hash(password)
+        )
+
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+
+            flash('You have successfully registered', 'success')
+            return redirect(url_for('login_user_get'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'An error occurred: {str(e)}', 'danger')
+    else:
+        flash('Invalid registration data', 'danger')
+        return render_template('login_register.html', registration_form=registration_form)
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('login_user_get'))
